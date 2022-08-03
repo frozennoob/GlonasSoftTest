@@ -9,5 +9,6 @@ namespace GlonassSoft.Application
         public Task<Guid> RequestReport(Guid userId);
         public Task<ReportInfo> GetReport(Guid requestGuid);
         public Task UpdatePercent();
+        public Task Remove(Guid queryGuid);
     }
 }

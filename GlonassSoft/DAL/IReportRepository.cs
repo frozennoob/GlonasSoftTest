@@ -11,5 +11,6 @@ namespace GlonassSoft.DAL
         public Task<Query> Get(Guid queryGuid);
         public Task<Guid> Create(Query query);
         public Task Update(Guid queryGuid, Query query);
+        public Task Remove(Guid queryGuid);
     }
 }

@@ -39,13 +39,17 @@ namespace GlonassSoft.Application
             return result;
         }
 
+        public async Task Remove(Guid queryGuid)
+        {
+            await _repo.Remove(queryGuid);
+        }
+
         public async Task<Guid> RequestReport(Guid userId)
         {
             var query = new Query
             {
                 QueryId = new Guid(),
                 CountSignIn = 0,
-                CreatedTime = DateTime.Now,
                 Percent = 0,
                 UserId = userId
             };

@@ -48,5 +48,12 @@ namespace GlonassSoft.DAL
 
             return result;
         }
+
+        public async Task Remove(Guid queryGuid)
+        {
+            var query = await _db.Queries.FirstOrDefaultAsync(q => q.QueryId == queryGuid);
+            _db.Queries.Remove(query);
+            await _db.SaveChangesAsync();
+        }
     }
 }
