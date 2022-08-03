@@ -1,14 +1,11 @@
 using GlonassSoft.Application;
 using GlonassSoft.DAL;
+using GlonassSoft.Infrastructure;
+using GlonassSoft.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace GlonassSoft
 {
@@ -18,8 +15,11 @@ namespace GlonassSoft
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddScoped<IUserStatisticsService, UserStatisticsService>();
-            services.AddScoped<IUserStatisticsRepository, UserStatisticsRepository>();
+            services.AddControllers();
+            services.AddEntityFrameworkSqlite().AddDbContext<DataBaseContext>();
+            services.AddScoped<IReportService, ReportService>();
+            services.AddScoped<IReportRepository, ReportRepository>();
+            services.AddHostedService<ReportHostedService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -30,14 +30,13 @@ namespace GlonassSoft
                 app.UseDeveloperExceptionPage();
             }
 
+            app.UseHttpsRedirection();
+
             app.UseRouting();
 
             app.UseEndpoints(endpoints =>
             {
-                endpoints.MapGet("/", async context =>
-                {
-                    await context.Response.WriteAsync("Hello World!");
-                });
+                endpoints.MapControllers();
             });
         }
     }

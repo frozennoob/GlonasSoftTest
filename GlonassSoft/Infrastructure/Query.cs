@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel.DataAnnotations;
 
 namespace GlonassSoft.Infrastructure
 {
@@ -8,5 +9,6 @@ namespace GlonassSoft.Infrastructure
         public Guid UserId { get; set; }
         public byte Percent { get; set; }
         public int CountSignIn { get; set; }
+        public DateTime CreatedTime { get; set; }
     }
 }

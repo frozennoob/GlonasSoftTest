@@ -1,37 +1,34 @@
 ﻿using GlonassSoft.Application;
 using GlonassSoft.Models;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace GlonassSoft.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("[controller]")]
     [ApiController]
     [Produces("application/json")]
-    public class UserStatisticsController : ControllerBase
+    public class ReportController : ControllerBase
     {
-        private readonly IUserStatisticsService _service;
+        private readonly IReportService _service;
 
-        public UserStatisticsController(IUserStatisticsService service)
+        public ReportController(IReportService service)
         {
             _service = service;
         }
 
         [HttpPost]
-        [Route("report/user_statistics")]
-        public async Task<Guid> RequestReport(Guid userId, DateTime dateFrom, DateTime dateTo)
+        [Route("user_statistics")]
+        public async Task<Guid> RequestReport([FromQuery]Guid userId)
         {
-            var result = await _service.RequestReport(userId, dateFrom, dateTo);
+            var result = await _service.RequestReport(userId);
 
             return result;
         }
 
         [HttpGet]
-        [Route("report/info")]
+        [Route("info")]
         public async Task<ReportInfo> GetReport(Guid requestGuid)
         {
             var result = await _service.GetReport(requestGuid);
